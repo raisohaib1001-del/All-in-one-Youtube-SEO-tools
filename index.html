@@ -3,117 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube SEO Tool - Free Generator</title>
+  <title>All in One YouTube SEO Tool</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      margin: 0;
-      padding: 20px;
+      background: #f4f7fa;
+      color: #333;
       text-align: center;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      color: #2b2f77;
-      margin-bottom: 10px;
+      color: #e62117;
     }
-    input {
-      width: 90%;
-      padding: 10px;
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
       margin: 10px 0;
-      border: 1px solid #ccc;
       border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 16px;
     }
     button {
-      background: #2b2f77;
+      background: #e62117;
       color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
+      transition: 0.3s;
     }
     button:hover {
-      background: #1e2155;
+      background: #cc1c13;
     }
-    .output {
+    .result {
       margin-top: 20px;
       text-align: left;
-      background: #f9f9f9;
       padding: 15px;
+      background: #f9f9f9;
       border-radius: 8px;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 14px;
     }
-    .section-title {
-      color: #2b2f77;
-      font-weight: bold;
-      margin-top: 15px;
+    .result h3 {
+      margin-bottom: 5px;
+      color: #e62117;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Free YouTube SEO Tool</h1>
-    <p>Enter your keyword and generate YouTube titles, tags & descriptions instantly!</p>
-    
+    <h1>All in One YouTube SEO Tool</h1>
+    <p>Enter a keyword below and generate YouTube Titles, Tags, and Descriptions instantly!</p>
     <input type="text" id="keyword" placeholder="Enter your keyword...">
-    <br>
-    <button onclick="generateSEO()">Generate</button>
+    <button onclick="generateAll()">Generate SEO Data</button>
 
-    <div id="output" class="output"></div>
+    <div class="result">
+      <h3>Generated Titles:</h3>
+      <p id="titles"></p>
+    </div>
+
+    <div class="result">
+      <h3>Generated Tags:</h3>
+      <p id="tags"></p>
+    </div>
+
+    <div class="result">
+      <h3>Generated Description:</h3>
+      <p id="description"></p>
+    </div>
   </div>
 
   <script>
-    function generateSEO() {
+    function generateAll() {
       const keyword = document.getElementById("keyword").value.trim();
-      if (keyword === "") {
-        alert("Please enter a keyword!");
+      if (!keyword) {
+        alert("⚠ Please enter a keyword!");
         return;
       }
 
-      // Title Ideas
-      const titles = [
-        Top 10 ${keyword} Tips You Must Know,
-        Best ${keyword} Strategies in 2025,
-        ${keyword} Tutorial for Beginners,
-        How to Master ${keyword} Step by Step,
-        Ultimate Guide to ${keyword}
-      ];
+      // Titles
+      document.getElementById("titles").innerText =
+        Top ${keyword} Tips | ${keyword} Guide | Learn ${keyword} Fast | Best ${keyword} Strategies;
 
       // Tags
-      const tags = [
-        ${keyword}, ${keyword} guide, best ${keyword}, 
-        ${keyword} tutorial, ${keyword} tips, 
-        learn ${keyword}, 2025 ${keyword}, 
-        easy ${keyword} tricks, how to do ${keyword}
-      ];
+      document.getElementById("tags").innerText =
+        ${keyword}, ${keyword} tutorial, ${keyword} guide, how to ${keyword}, best ${keyword} tips, ${keyword} tricks, viral ${keyword}, trending ${keyword};
 
       // Description
-      const description = `Discover the best ${keyword} tips and tricks in this video. 
-Learn how to master ${keyword} step by step and boost your knowledge. 
-This video covers everything you need to know about ${keyword} in 2025.`;
-
-      // Show Output
-      document.getElementById("output").innerHTML = `
-        <div class="section-title">🎯 Title Ideas:</div>
-        <ul>${titles.map(t => <li>${t}</li>).join('')}</ul>
-
-        <div class="section-title">🏷 Tags:</div>
-        <p>${tags.join(', ')}</p>
-
-        <div class="section-title">📝 Description:</div>
-        <p>${description}</p>
-      `;
+      document.getElementById("description").innerText =
+        Discover everything about ${keyword}! This free SEO tool generates optimized YouTube titles, tags, and descriptions to help your videos rank higher and attract more viewers. Try it now and boost your YouTube growth with smart SEO.;
     }
   </script>
 </body>
