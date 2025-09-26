@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>YouTube All-in-One SEO Tool</title>
+<style>
+  :root{
+    --bg:#f5f8fb; --card:#ffffff; --muted:#666;
+    --accent1: linear-gradient(135deg,#ff416c,#ff4b2b);
+    --accent2: linear-gradient(135deg,#0072ff,#00c6ff);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    background:var(--bg); color:#111;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px;margin:28px auto;padding:18px}
+  .header{ text-align:center;margin-bottom:14px }
+  .title{font-size:1.8rem;margin:0 0 6px}
+  .subtitle{color:var(--muted);font-size:0.95rem;margin:0}
+  .card{
+    background:var(--card); border-radius:14px; padding:18px;
+    box-shadow:0 8px 30px rgba(20,30,60,0.06); margin-top:18px;
+  }
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  input[type=text]{
+    width:100%; padding:12px 14px; border-radius:10px; border:1px solid #e6e9ee; font-size:1rem;
+  }
+  .btn{
+    display:inline-block; border:0; padding:12px 18px; color:#fff; border-radius:999px;
+    cursor:pointer; font-weight:600; font-size:1rem; transition:all .18s;
+    background:var(--accent1);
+  }
+  .btn:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(0,0,0,0.12) }
+  .copy-btn{ background:var(--accent2); padding:9px 12px; border-radius:999px; color:#fff; border:0; cursor:pointer; font-size:0.92rem; }
+  .output{ background:#fbfdff; border:1px solid #eef4ff; padding:12px; border-radius:10px; white-space:pre-wrap; font-size:0.95rem; color:#0b1220; min-height:44px }
+  .small{ font-size:0.9rem;color:var(--muted) }
+  /* responsive */
+  @media (max-width:720px){
+    .row{flex-direction:column}
+    .title{font-size:1.4rem}
+  }
+  /* nice little toast */
+  #toast{ position:fixed; right:18px; bottom:18px; background:#111; color:#fff; padding:10px 14px; border-radius:8px; display:none; opacity:0.95; font-size:0.95rem; z-index:9999}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1 class="title">🔥 YouTube All-in-One SEO Tool</h1>
+      <div class="subtitle">Generate Titles • Tags • Hashtags • Description • Thumbnail Ideas — free</div>
+    </div>
+
+    <div class="card">
+      <div style="margin-bottom:12px" class="small">Enter a short keyword/topic (2–6 words) e.g. <em>AI tools for YouTube</em></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input id="keyword" type="text" placeholder="Enter your video topic / keyword">
+        <button class="btn" onclick="generateAll()">Generate SEO Content</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <h3 style="margin:0">🎬 Title Ideas</h3>
+        <button class="copy-btn" onclick="copyText('titles')">Copy Titles</button>
+      </div>
+      <div id="titles" class="output" aria-live="polite"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <h3 style="margin:0">🏷 Tags</h3>
+        <button class="copy-btn" onclick="copyText('tags')">Copy Tags</button>
+      </div>
+      <div id="tags" class="output"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <h3 style="margin:0">🔖 Hashtags</h3>
+        <button class="copy-btn" onclick="copyText('hashtags')">Copy Hashtags</button>
+      </div>
+      <div id="hashtags" class="output"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <h3 style="margin:0">📝 Video Description</h3>
+        <button class="copy-btn" onclick="copyText('description')">Copy Description</button>
+      </div>
+      <div id="description" class="output"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <h3 style="margin:0">🖼 Thumbnail Text Ideas</h3>
+        <button class="copy-btn" onclick="copyText('thumbnail')">Copy Thumbnail</button>
+      </div>
+      <div id="thumbnail" class="output"></div>
+    </div>
+
+  </div>
+
+  <div id="toast">Copied to clipboard</div>
+
+<script>
+  // simple generator logic — safe client side
+  function generateAll(){
+    const K = document.getElementById('keyword').value.trim();
+    if(!K){ alert('Please enter a keyword/topic first'); return; }
+    const year = new Date().getFullYear();
+    // titles
+    const titles = [
+      ${K} | Ultimate Guide ${year},
+      How to Use ${K} for Fast Growth,
+      ${K} Secrets That Work in ${year},
+      Top ${K} Tips for Beginners
+    ].join('\n');
+    document.getElementById('titles').textContent = titles;
+
+    // tags (permutations)
+    const base = K.toLowerCase();
+    const tagsArr = new Set([
+      base, ${base} tutorial, ${base} ${year}, ${base} tips, how to ${base},
+      ${base} pakistan, ${base} youtube, earn with ${base}, viral ${base}
+    ]);
+    document.getElementById('tags').textContent = Array.from(tagsArr).join(', ');
+
+    // hashtags
+    const firstWord = K.split(' ')[0] || K;
+    const hashtags = [
+      #${K.replace(/\s+/g,'')},
+      #${firstWord},
+      '#YouTubeGrowth',
+      '#ViralTips',
+      #${year}
+    ].join(' ');
+    document.getElementById('hashtags').textContent = hashtags;
+
+    // description
+    const desc =
+`In this video we cover ${K} and practical steps you can use right away in ${year} to grow, monetize and get more views. Topics: tools, strategy, step-by-step tips, and monetization ideas.  
+🔔 Subscribe for more: [Your Channel Link]  
+🔗 Read full guide: https://theearnwithtech.blogspot.com`;
+    document.getElementById('description').textContent = desc;
+
+    // thumbnail ideas
+    const thumb =
+`🔥 ${K.toUpperCase()} 🔥
+🚀 MUST WATCH ${year}
+💡 Top ${K} Tips`;
+    document.getElementById('thumbnail').textContent = thumb;
+  }
+
+  function copyText(id){
+    const txt = document.getElementById(id).innerText;
+    if(!txt){ showToast('Nothing to copy'); return; }
+    navigator.clipboard.writeText(txt).then(()=>{
+      showToast('Copied to clipboard');
+    }).catch(()=>{
+      alert('Copy failed — select and Ctrl+C');
+    });
+  }
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.style.display='block';
+    setTimeout(()=> t.style.display='none',1500);
+  }
+</script>
+</body>
+</html>          
